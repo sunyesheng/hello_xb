@@ -14,7 +14,9 @@ export default (props) => {
       }}
     >
       <a href="javascript:;">
-        <p>{words}</p>
+        <p style={{ fontSize: words?.length < 50 ? '17px' : '13px' }}>
+          {words}
+        </p>
       </a>
     </li>
   )
