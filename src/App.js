@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import './App.css'
+import { Input } from 'antd'
+import Card from './Card'
+
+/**
+ * list 数据结构  =  top left zindex words color
+ */
 
 function App() {
+  const [list, setList] = useState([])
+  const [value, setValue] = useState('')
+  const onPressEnter = (e) => {
+    if (e.target.value && e.target.value !== '') {
+      const newItem = {
+        top: Math.floor(Math.random() * (window.innerHeight - 500)),
+        left: Math.floor(Math.random() * (window.innerWidth - 500)),
+        zindex: list.length + 1,
+        words: e.target.value,
+      }
+      setList([...list, newItem])
+      setValue('')
+    } else {
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ul>
+        {list.map((value, index) => (
+          <Card key={index} {...value} />
+        ))}
+      </ul>
+
+      {/* input 输入框 */}
+      <div className="app-input">
+        <Input
+          className="antd-input"
+          value={value}
+          onChange={(value) => {
+            setValue(value.target.value)
+          }}
+          maxLength={100}
+          showCount
+          allowClear
+          onPressEnter={onPressEnter}
+        />
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
